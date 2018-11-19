@@ -70,13 +70,13 @@ AddressingModes={
 # you give it the binary code of addressing mode and it returns the number of words
 NoOfWords={ # 7d yt check 3la dah !!!!!!
         '000':0,
-        '001':1, 
-        '010':0,
-        '011':1,
+        '001':0, 
+        '010':1,
+        '011':0,
         '100':0,
-        '101':1,
+        '101':0,
         '110':1,
-        '111':2
+        '111':1
         }
 
 

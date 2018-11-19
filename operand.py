@@ -67,8 +67,8 @@ def GetOperandMode(operand):
     
     mode += indirect
     reg = operand
-    print (mode)
-    print (reg)
+    #print (mode)
+    #print (reg)
     modeCode=op.AddressingModes[mode]
     regCode=op.Register[reg]
     return modeCode,regCode
