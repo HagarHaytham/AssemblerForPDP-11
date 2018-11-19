@@ -30,8 +30,22 @@ def GetOperandMode(operand):
         operand="X(R7)" # indexed
     
 
-    # replace letters of a var before (  with X <---------------------------> not done    
-    # the unhandeled mode yet is Var(R0) <----------------------------->    
+    # replace letters of a var before (  with X  
+    # to handel var(R0) index mode
+    if ("(" in operand and operand[0]!='-') :
+        if operand[0] != "(":
+           operand=operand.replace(operand[0],"X")
+           while (operand[1] != "(" ):
+               operand = list(operand)  # Convert the string to a list
+               operand[1] = ""  # Change the character using its index 
+               operand = "".join(operand)  # Change the list back to string, by using 'join' method of strings
+ 
+            #this one doesn't work as if the variable name contains r for example it will remove the r letter of the register
+            #operand=operand.replace(operand[1],"") #this one doesn't work
+
+    
+    
+    
     out="" 
     if '+' in operand:
         mode ="autoincrement"
@@ -61,6 +75,6 @@ def GetOperandMode(operand):
 
 
 
-m,r=GetOperandMode("N")
+m,r=GetOperandMode("VAR(R5)")
 print (m)
 print (r)
