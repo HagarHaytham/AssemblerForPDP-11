@@ -4,7 +4,7 @@ Created on Sun Nov 18 17:10:17 2018
 
 @author: hagar
 """
-
+# you give it the operation and it returns the binary code of it
 Opcodes = {
         #2 OP INSTRUCTION
         'MOV':'0111',
@@ -52,3 +52,44 @@ Opcodes = {
         'JSR':'0011000000000000' # 0011 + something
         
         }
+
+
+#you give it the addressing mode and it returns the binary code of it
+AddressingModes={
+        'register':'000',
+        'registerindirect':'001',
+        'autoincrement':'010',
+        'autoincrementindirect':'011',
+        'autodecrement':'100',
+        'autodecrementindirect':'101',
+        'indexed':'110',
+        'indexedindirect':'111'
+        
+        }
+
+# you give it the binary code of addressing mode and it returns the number of words
+NoOfWords={ # 7d yt check 3la dah !!!!!!
+        '000':0,
+        '001':1, 
+        '010':0,
+        '011':1,
+        '100':0,
+        '101':1,
+        '110':1,
+        '111':2
+        }
+
+
+Register={
+        'R0':'000',
+        'R1':'001', 
+        'R2':'010',
+        'R3':'011',
+        'R4':'100',
+        'R5':'101',
+        'R6':'110',
+        'R7':'111'
+        
+        }
+
+    
