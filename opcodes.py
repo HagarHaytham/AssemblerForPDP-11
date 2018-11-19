@@ -62,8 +62,8 @@ AddressingModes={
         'autoincrementindirect':'011',
         'autodecrement':'100',
         'autodecrementindirect':'101',
-        'indexed':'110',
-        'indexedindirect':'111'
+        'index':'110',
+        'indexindirect':'111'
         
         }
 
