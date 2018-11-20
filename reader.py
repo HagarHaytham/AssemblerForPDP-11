@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[99]:
+# In[108]:
 
 
 import re
@@ -16,7 +16,7 @@ indexed='[@]*[0-9]+[(][[R][0-7][)]+'
 indirect='[-]*[(][[R][0-7][)]+[+]*'
 data='define'
 branch='[B]+[A-Z]*[A-Z]*'
-indirect='[(][[R][0-7][)]+'
+indirect='[(]+[R]+[0-7]+[)]+'
 symbol_dict={}
 symbol_add={}
 indexed_hashed={}
@@ -53,12 +53,14 @@ for line in lines:
             
             if re.search(immediate,operand[j]) != None :
                 oper=operand[j].replace("#","")
-                indexed_hashed[pc+1]=oper
+                indexed_hashed[pc+1+j]=oper
                 
             if re.search(indexed,operand[j]) != None :
                 oper=operand[j].replace("@","")
-                re.sub(indirect,"",oper)
-                indexed_hashed[pc+1]=oper
+                print(oper)
+                oper=re.sub(indirect,"",oper)
+                print(oper)
+                indexed_hashed[pc+1+j]=oper
         
         if (data == operation_code.lower()):
             symbol_dict[operand[0]]=-(pc+1)
@@ -93,12 +95,14 @@ for key in symbol_add:
     label=symbol_add[key]
     value=symbol_dict[label]
     v=value+key
-    translated_code[key]+=" "+bin(v & 0b1111111111111111)
+    #translated_code[key]+=" "+bin(v & 0b1111111111111111)
+    translated_code[key]+=" "+str(v)
 print(indexed_hashed)
 for key in indexed_hashed:
     v=indexed_hashed[key]
     print(key,v)
-    translated_code[key]=bin(int(v) & 0b1111111111111111)
+    #translated_code[key]=bin(int(v) & 0b1111111111111111)
+    translated_code[key]=v
 print(translated_code)    
 
         
