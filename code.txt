@@ -17,6 +17,7 @@ MOV #18, @1000(R3)                 ;              address 17
 MOV #18,N                 ;              address 20
 MOV N,#18                ;              address 23
 MOV N,M             ;              address 26
-HLT                ;            address 29
-Define  N  7                ;            address 30
-Define M  5                ;            address 31
+MOV @#1000 ,N           ;              address 29
+HLT                ;            address 32
+Define  N  7                ;            address 33
+Define M  5                ;            address 34
