@@ -120,10 +120,11 @@ def assembler():
     place_immediate_values(indexed_hashed,translated_code)
     place_indexed_variables(variable_add,symbol_dict,translated_code)
     place_subroutines_add(subroutine_add,subroutine_dict,translated_code)
-
+    f = open("Assembled_code.txt", "w")
     for i in range(len(translated_code)):
-        print(i,translated_code[i])  
-        
+        print(i,translated_code[i]) 
+        f.write(str(i)+"  "+str(translated_code[i])+'\n')
+    f.close()    
         
 assembler()
 def place_symbols(symbol_add,symbol_dict,translated_code):
@@ -133,7 +134,7 @@ def place_symbols(symbol_add,symbol_dict,translated_code):
         value=symbol_dict[label]
         v=-value-key-1
         #translated_code[key]+=" "+bin(v & 0b1111111111111111)
-        translated_code[key]+=" "+str(v)
+        translated_code[key]+=str(v)
     #print(indexed_hashed)
 def place_immediate_values(indexed_hashed,translated_code):
     for key in indexed_hashed:
