@@ -18,17 +18,17 @@ Opcodes = {
         'CMP':'1111',
         
         #1 OP DISTNATION
-        'INC':'00010000',
-        'DEC':'00010001',
-        'CLR':'00010010',
-        'INV':'00010011',
-        'LSR':'00010100',
-        'ROR':'00010101',
-        'RRC':'00010110',
-        'ASR':'00010111',
-        'LSL':'00011000',
-        'ROL':'00011001',
-        'RLC':'00011010',
+        'INC':'0001000000',#+00
+        'DEC':'0001000100',
+        'CLR':'0001001000',
+        'INV':'0001001100',
+        'LSR':'0001010000',
+        'ROR':'0001010100',
+        'RRC':'0001011000',
+        'ASR':'0001011100',
+        'LSL':'0001100000',
+        'ROL':'0001100100',
+        'RLC':'0001101000',
         
         #1 OP OFFSET
         'BR' :'0010000',
@@ -41,12 +41,12 @@ Opcodes = {
         
         
         #0 OP INSTURCTION
-        'HLT':'0000000',
-        'NOP':'0000001',
+        'HLT':'0000000000000000',#+000000000
+        'NOP':'0000001000000000',
         # + 3 INSTRUCTIONS FROM JSR SUBROUTIINE INSTRUCRIONS
-        'RTS':'0000010',
-        'INTERRUPT':'0000011',
-        'IRET':'0000100',
+        'RTS':'0000010000000000',
+        'INTERRUPT':'0000011000000000',
+        'IRET':'0000100000000000',
         
         #JSR INSTRUCTION
         'JSR':'0011000000000000' # 0011 + something
@@ -67,18 +67,6 @@ AddressingModes={
         
         }
 
-# you give it the binary code of addressing mode and it returns the number of words
-NoOfWords={ # 7d yt check 3la dah !!!!!!
-        '000':0,
-        '001':0, 
-        '010':1,
-        '011':1,
-        '100':0,
-        '101':0,
-        '110':1,
-        '111':1
-        }
-
 
 Register={
         'R0':'000',
@@ -90,6 +78,18 @@ Register={
         'R6':'110',
         'R7':'111'
         
+        }
+
+# you give it the binary code of addressing mode and it returns the number of words
+NoOfWords={ # 7d yt check 3la dah !!!!!!
+        '000':0,
+        '001':0, 
+        '010':1,
+        '011':1,
+        '100':0,
+        '101':0,
+        '110':1,
+        '111':1
         }
 
     

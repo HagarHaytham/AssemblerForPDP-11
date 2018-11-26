@@ -75,6 +75,6 @@ def GetOperandMode(operand):
 
 
 
-m,r=GetOperandMode("VAR(R5)")
+m,r=GetOperandMode("(R5)")
 print (m)
 print (r)
