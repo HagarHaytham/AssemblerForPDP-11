@@ -3,6 +3,47 @@
 import re
 import operand as op
 import opcodes as opcode
+
+def place_symbols(symbol_add,symbol_dict,translated_code,labels):
+    for key in symbol_add:  
+        
+        
+        label=symbol_add[key]
+        if(label in labels):
+            print(label,"label")
+            bits=9
+        else:
+            print(label,"variable")
+            bits=16
+        #print(key,label)
+        value=symbol_dict[label]
+        v=-value-key-1
+        
+        #translated_code[key]+=" "+bin(v & 0b1111111111111111)
+        translated_code[key]+=str(v)
+    #print(indexed_hashed)
+def place_immediate_values(indexed_hashed,translated_code):
+    for key in indexed_hashed:
+        #print(key)
+        v=indexed_hashed[key]
+        translated_code[key]=bin(int(v) & 0b1111111111111111)
+        translated_code[key]=v
+def place_indexed_variables(variable_add,symbol_dict,translated_code):
+    for key in variable_add:  
+         print(key)
+         variable=variable_add[key]
+         address=-symbol_dict[variable]
+         translated_code[key]+=str(address)      
+         
+def place_subroutines_add(subroutine_add,subroutine_dict,translated_code):
+      for key in subroutine_add:  
+        label=subroutine_add[key]
+        #print(key,label)
+        value=subroutine_dict[label]
+        #translated_code[key]+=" "+bin(v & 0b1111111111111111)
+        translated_code[key]+=str(value)
+
+        
 def assembler():
     source_code=open("code.txt",'r')
     lines = source_code.readlines()
@@ -14,6 +55,7 @@ def assembler():
     branch='[B]+[A-Z]*[A-Z]*'
     indirect='[(]+[R]+[0-7]+[)]+'
     indexed_indirect='([@]+[A-Z]*)\w+'
+    labels=[]
     subroutine='jsr'
     subroutine_flag=False
     symbol_dict={}
@@ -75,6 +117,7 @@ def assembler():
                 return
             if re.search(branch,operation_code, re.IGNORECASE) != None :
                 symbol_add[pc]=operand[0]
+                labels.append(operand[0])
                 flag=False 
             if re.search(subroutine,operation_code, re.IGNORECASE) != None :
                 print(pc)
@@ -116,7 +159,7 @@ def assembler():
                 instruction_code=""
 
 
-    place_symbols(symbol_add,symbol_dict,translated_code)
+    place_symbols(symbol_add,symbol_dict,translated_code,labels)
     place_immediate_values(indexed_hashed,translated_code)
     place_indexed_variables(variable_add,symbol_dict,translated_code)
     place_subroutines_add(subroutine_add,subroutine_dict,translated_code)
@@ -127,35 +170,3 @@ def assembler():
     f.close()    
         
 assembler()
-def place_symbols(symbol_add,symbol_dict,translated_code):
-    for key in symbol_add:  
-        label=symbol_add[key]
-        #print(key,label)
-        value=symbol_dict[label]
-        v=-value-key-1
-        #translated_code[key]+=" "+bin(v & 0b1111111111111111)
-        translated_code[key]+=str(v)
-    #print(indexed_hashed)
-def place_immediate_values(indexed_hashed,translated_code):
-    for key in indexed_hashed:
-        #print(key)
-        v=indexed_hashed[key]
-        #translated_code[key]=bin(int(v) & 0b1111111111111111)
-        translated_code[key]=v
-def place_indexed_variables(variable_add,symbol_dict,translated_code):
-    for key in variable_add:  
-         print(key)
-         variable=variable_add[key]
-         address=-symbol_dict[variable]
-         translated_code[key]+=str(address)      
-         
-def place_subroutines_add(subroutine_add,subroutine_dict,translated_code):
-      for key in subroutine_add:  
-        label=subroutine_add[key]
-        #print(key,label)
-        value=subroutine_dict[label]
-        #translated_code[key]+=" "+bin(v & 0b1111111111111111)
-        translated_code[key]+=str(value)
-
-        
-
