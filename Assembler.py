@@ -19,11 +19,13 @@ def place_symbols(symbol_add,symbol_dict,translated_code,labels):
         value=symbol_dict[label]
         offset=-value-key-1
         offset=get_bin(offset,bits)###########################################
-        translated_code[key]+=str(offset)
+        #translated_code[key]+=str(offset)
         #translated_code[key]+=" "+bin(v & 0b1111111111111111)
+        #offset=get_bin(offset,bits)
         translated_code[key]+=str(offset)
 
 def get_bin(x,n): # get binary of an offset 
+    x=int(x)
     bits=format(abs(x), 'b').zfill(n)
     
     bits = list(bits)
@@ -42,6 +44,7 @@ def get_bin(x,n): # get binary of an offset
     else:
         for i in range (len(bits)):
             st+=bits[i]
+    print (st)
     return st
     
 
@@ -51,12 +54,14 @@ def place_immediate_values(indexed_hashed,translated_code):
         v=indexed_hashed[key]
         #translated_code[key]=bin(int(v) & 0b1111111111111111)
         #translated_code[key]=bin(int(v) & 0b1111111111111111)
+        v=get_bin(v,16)
         translated_code[key]=v
 def place_indexed_variables(variable_add,symbol_dict,translated_code):
     for key in variable_add:  
          print(key)
          variable=variable_add[key]
          address=-symbol_dict[variable]
+         address=get_bin(address,16)
          translated_code[key]+=str(address)      
          
 def place_subroutines_add(subroutine_add,subroutine_dict,translated_code):
@@ -65,6 +70,7 @@ def place_subroutines_add(subroutine_add,subroutine_dict,translated_code):
         #print(key,label)
         value=subroutine_dict[label]
         #translated_code[key]+=" "+bin(v & 0b1111111111111111)
+        value=get_bin(value,16)
         translated_code[key]+=str(value)
 
 
