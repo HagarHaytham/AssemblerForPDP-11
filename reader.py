@@ -3,6 +3,37 @@
 import re
 import operand as op
 import opcodes as opcode
+
+def place_symbols(symbol_add,symbol_dict,translated_code):
+    for key in symbol_add:  
+        label=symbol_add[key]
+        #print(key,label)
+        value=symbol_dict[label]
+        offset=-value-key-1
+        #translated_code[key]+=" "+bin(v & 0b1111111111111111)
+        translated_code[key]+=" "+str(offset)
+    #print(indexed_hashed)
+def place_immediate_values(indexed_hashed,translated_code):
+    for key in indexed_hashed:
+        #print(key)
+        v=indexed_hashed[key]
+        #translated_code[key]=bin(int(v) & 0b1111111111111111)
+        translated_code[key]=v
+def place_indexed_variables(variable_add,symbol_dict,translated_code):
+    for key in variable_add:  
+         print(key)
+         variable=variable_add[key]
+         address=-symbol_dict[variable]
+         translated_code[key]+=str(address)      
+         
+def place_subroutines_add(subroutine_add,subroutine_dict,translated_code):
+      for key in subroutine_add:  
+        label=subroutine_add[key]
+        #print(key,label)
+        value=subroutine_dict[label]
+        #translated_code[key]+=" "+bin(v & 0b1111111111111111)
+        translated_code[key]+=str(value)
+
 def assembler():
     source_code=open("code.txt",'r')
     lines = source_code.readlines()
@@ -126,35 +157,6 @@ def assembler():
         
         
 assembler()
-def place_symbols(symbol_add,symbol_dict,translated_code):
-    for key in symbol_add:  
-        label=symbol_add[key]
-        #print(key,label)
-        value=symbol_dict[label]
-        v=-value-key-1
-        #translated_code[key]+=" "+bin(v & 0b1111111111111111)
-        translated_code[key]+=" "+str(v)
-    #print(indexed_hashed)
-def place_immediate_values(indexed_hashed,translated_code):
-    for key in indexed_hashed:
-        #print(key)
-        v=indexed_hashed[key]
-        #translated_code[key]=bin(int(v) & 0b1111111111111111)
-        translated_code[key]=v
-def place_indexed_variables(variable_add,symbol_dict,translated_code):
-    for key in variable_add:  
-         print(key)
-         variable=variable_add[key]
-         address=-symbol_dict[variable]
-         translated_code[key]+=str(address)      
-         
-def place_subroutines_add(subroutine_add,subroutine_dict,translated_code):
-      for key in subroutine_add:  
-        label=subroutine_add[key]
-        #print(key,label)
-        value=subroutine_dict[label]
-        #translated_code[key]+=" "+bin(v & 0b1111111111111111)
-        translated_code[key]+=str(value)
 
         
 
