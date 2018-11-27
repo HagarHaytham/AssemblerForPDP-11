@@ -3,6 +3,59 @@
 import re
 import operand as op
 import opcodes as opcode
+
+def get_bin(x,n): # get binary of an offset 
+    bits=format(abs(x), 'b').zfill(n)
+    
+    bits = list(bits)
+    st=""
+    if (x<0):
+        s=""
+        for i in range (len(bits)): # not 1's
+            if bits[i]=='0':
+                bits[i]='1'
+            else:
+                bits[i]='0'
+            s+=bits[i]
+        twoscomp = bin(int(s,2) + int('1',2))
+        st = str(twoscomp)
+        st=st[2:len(st)]
+    else:
+        for i in range (len(bits)):
+            st+=bits[i]
+    return st
+    
+def place_symbols(symbol_add,symbol_dict,translated_code):
+    for key in symbol_add:  
+        label=symbol_add[key]
+        #print(key,label)
+        value=symbol_dict[label]
+        offset=-value-key-1
+        #translated_code[key]+=" "+bin(v & 0b1111111111111111)
+        offset=get_bin(offset,9)###########################################
+        translated_code[key]+=str(offset)
+    #print(indexed_hashed)
+def place_immediate_values(indexed_hashed,translated_code):
+    for key in indexed_hashed:
+        #print(key)
+        v=indexed_hashed[key]
+        #translated_code[key]=bin(int(v) & 0b1111111111111111)
+        translated_code[key]=v
+def place_indexed_variables(variable_add,symbol_dict,translated_code):
+    for key in variable_add:  
+         print(key)
+         variable=variable_add[key]
+         address=-symbol_dict[variable]
+         translated_code[key]+=str(address)      
+         
+def place_subroutines_add(subroutine_add,subroutine_dict,translated_code):
+      for key in subroutine_add:  
+        label=subroutine_add[key]
+        #print(key,label)
+        value=subroutine_dict[label]
+        #translated_code[key]+=" "+bin(v & 0b1111111111111111)
+        translated_code[key]+=str(value)
+
 def assembler():
     source_code=open("code.txt",'r')
     lines = source_code.readlines()
@@ -127,35 +180,6 @@ def assembler():
     f.close()    
         
 assembler()
-def place_symbols(symbol_add,symbol_dict,translated_code):
-    for key in symbol_add:  
-        label=symbol_add[key]
-        #print(key,label)
-        value=symbol_dict[label]
-        v=-value-key-1
-        #translated_code[key]+=" "+bin(v & 0b1111111111111111)
-        translated_code[key]+=str(v)
-    #print(indexed_hashed)
-def place_immediate_values(indexed_hashed,translated_code):
-    for key in indexed_hashed:
-        #print(key)
-        v=indexed_hashed[key]
-        #translated_code[key]=bin(int(v) & 0b1111111111111111)
-        translated_code[key]=v
-def place_indexed_variables(variable_add,symbol_dict,translated_code):
-    for key in variable_add:  
-         print(key)
-         variable=variable_add[key]
-         address=-symbol_dict[variable]
-         translated_code[key]+=str(address)      
-         
-def place_subroutines_add(subroutine_add,subroutine_dict,translated_code):
-      for key in subroutine_add:  
-        label=subroutine_add[key]
-        #print(key,label)
-        value=subroutine_dict[label]
-        #translated_code[key]+=" "+bin(v & 0b1111111111111111)
-        translated_code[key]+=str(value)
 
         
 
