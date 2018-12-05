@@ -10,10 +10,10 @@ def place_symbols(symbol_add,symbol_dict,translated_code,labels):
         label=symbol_add[key]
         bits=0
         if(label in labels):
-            print(label,"label")
+           
             bits=9
         else:
-            print(label,"variable")
+           
             bits=16
         #print(key,label)
         value=symbol_dict[label]
@@ -44,7 +44,6 @@ def get_bin(x,n): # get binary of an offset
     else:
         for i in range (len(bits)):
             st+=bits[i]
-    print (st)
     return st
     
 
@@ -58,7 +57,7 @@ def place_immediate_values(indexed_hashed,translated_code):
         translated_code[key]=v
 def place_indexed_variables(variable_add,symbol_dict,translated_code):
     for key in variable_add:  
-         print(key)
+        
          variable=variable_add[key]
          address=-symbol_dict[variable]
          address=get_bin(address,16)
@@ -156,7 +155,6 @@ def assembler():
                 labels.append(operand[0])
                 flag=False 
             if re.search(subroutine,operation_code, re.IGNORECASE) != None :
-                print(pc)
                 pc+=1
                 subroutine_add[pc]=operand[0]
                 flag=False 
