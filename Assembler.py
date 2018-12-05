@@ -67,7 +67,10 @@ def place_subroutines_add(subroutine_add,subroutine_dict,translated_code):
         #translated_code[key]+=" "+bin(v & 0b1111111111111111)
         translated_code[key]+=str(value)
 
-
+def place_data(data,translated_code):
+    for i in data:
+        value=get_bin(int(i),16)
+        translated_code.append(value)
 
 def assembler():
     source_code=open("code.txt",'r')
@@ -89,6 +92,7 @@ def assembler():
     indexed_hashed={}
     subroutine_dict={}
     subroutine_add={}
+    variables_values=[]
     translated_code=[]
     pc=0
     for line in lines:
@@ -132,6 +136,7 @@ def assembler():
                 operand.append(instruction_elements[j])
 
             if (data == operation_code.lower()):
+                variables_values.append(operand[1])
                 symbol_dict[operand[0]]=-(pc)
                 pc+=1     
                 continue
@@ -188,6 +193,7 @@ def assembler():
     place_immediate_values(indexed_hashed,translated_code)
     place_indexed_variables(variable_add,symbol_dict,translated_code)
     place_subroutines_add(subroutine_add,subroutine_dict,translated_code)
+    place_data(variables_values,translated_code)
     f = open("Assembled_code.txt", "w")
     for i in range(len(translated_code)):
         print(i,translated_code[i]) 
